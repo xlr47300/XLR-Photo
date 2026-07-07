@@ -15,7 +15,7 @@ export function SeriesCard({ item, index }: SeriesCardProps) {
     <article className="group grid gap-8 border-t border-ivory/10 pt-10 md:grid-cols-[minmax(0,1.18fr)_minmax(18rem,0.82fr)] md:gap-16 md:pt-16 even:md:grid-cols-[minmax(18rem,0.82fr)_minmax(0,1.18fr)]">
       <Link
         className="relative block overflow-hidden even:md:order-2"
-        href={`/series/${item.slug}/`}
+        href={`/series/?slug=${item.slug}`}
       >
         {firstPhoto ? (
           <img
@@ -46,7 +46,7 @@ export function SeriesCard({ item, index }: SeriesCardProps) {
         ) : null}
         <Link
           className="mt-9 inline-flex w-fit border-b border-champagne/40 pb-2 font-mono text-[0.7rem] uppercase tracking-[0.22em] text-ivory/88 transition-colors duration-300 hover:text-champagne"
-          href={`/series/${item.slug}/`}
+          href={`/series/?slug=${item.slug}`}
         >
           Ouvrir le chapitre
         </Link>
