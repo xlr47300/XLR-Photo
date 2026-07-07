@@ -1,14 +1,24 @@
+import { notFound } from "next/navigation";
+import { getSiteContent } from "@/lib/siteContent";
+
 export const metadata = {
   title: "Contact | XLR Photographie",
   description: "Contact XLR Photographie."
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { pages } = await getSiteContent();
+  const page = pages.find((item) => item.slug === "contact");
+
+  if (!page) {
+    notFound();
+  }
+
   return (
     <main>
       <section className="mx-auto min-h-svh max-w-7xl px-5 pb-24 pt-40 md:px-10 md:pt-52">
         <p className="font-mono text-[0.66rem] uppercase tracking-[0.3em] text-champagne/65">
-          Contact
+          {page.label}
         </p>
         <h1 className="mt-7 max-w-4xl font-serif text-[clamp(4rem,9vw,8rem)] leading-[0.92] text-ivory">
           Tirages, séries, commandes et échanges.

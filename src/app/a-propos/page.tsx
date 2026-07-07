@@ -1,14 +1,24 @@
+import { notFound } from "next/navigation";
+import { getSiteContent } from "@/lib/siteContent";
+
 export const metadata = {
   title: "À propos | XLR Photographie",
   description: "Présentation de l'approche éditoriale du site XLR Photographie."
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { pages } = await getSiteContent();
+  const page = pages.find((item) => item.slug === "a-propos");
+
+  if (!page) {
+    notFound();
+  }
+
   return (
     <main>
       <section className="mx-auto min-h-svh max-w-7xl px-5 pb-24 pt-40 md:px-10 md:pt-52">
         <p className="font-mono text-[0.66rem] uppercase tracking-[0.3em] text-champagne/65">
-          À propos
+          {page.label}
         </p>
         <h1 className="mt-7 max-w-4xl font-serif text-[clamp(4rem,9vw,8rem)] leading-[0.92] text-ivory">
           Une lecture lente de la photographie.

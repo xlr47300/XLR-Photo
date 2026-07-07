@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { SeriesCard } from "@/components/SeriesCard";
-import { series, totalPhotoCount } from "@/data/series";
+import { getPhotoCount, getSiteContent } from "@/lib/siteContent";
 
-export default function Home() {
+export default async function Home() {
+  const content = await getSiteContent();
+  const { settings, series } = content;
+  const totalPhotoCount = getPhotoCount(content);
+
   return (
     <main>
       <section className="relative grid min-h-svh place-items-center overflow-hidden px-5 pb-24 pt-36 text-center md:px-10">
@@ -16,17 +20,17 @@ export default function Home() {
             </span>
           </div>
           <p className="font-mono text-[0.66rem] uppercase tracking-[0.32em] text-ivory/38 before:mx-4 before:inline-block before:h-px before:w-8 before:bg-ivory/15 before:align-middle after:mx-4 after:inline-block after:h-px after:w-8 after:bg-ivory/15 after:align-middle">
-            Carnet photographique
+            {settings.heroEyebrow}
           </p>
           <h1 className="mt-9 font-serif text-[clamp(4rem,10vw,9rem)] leading-[0.9] tracking-normal text-ivory">
-            Les chapitres
+            {settings.heroTitle}
             <br />
-            <em className="font-normal italic text-champagne">silencieux</em>
+            <em className="font-normal italic text-champagne">{settings.heroAccent}</em>
           </h1>
-          <p className="mx-auto mt-9 max-w-2xl font-serif text-xl italic leading-9 text-ivory/55 md:text-2xl">
-            Séries d’auteur, matières urbaines, lumière retenue et instants suspendus.
+          <p className="mx-auto mt-9 max-w-2xl font-serif text-[1.35rem] italic leading-9 text-ivory/62 md:text-2xl">
+            {settings.heroDescription}
           </p>
-          <div className="mt-12 flex flex-wrap justify-center gap-7 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-ivory/38">
+          <div className="mt-12 flex flex-wrap justify-center gap-7 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ivory/42">
             <span>{series.length} séries</span>
             <span className="text-ivory/18">·</span>
             <span>{totalPhotoCount} photographies</span>
@@ -45,16 +49,14 @@ export default function Home() {
       <section className="mx-auto grid max-w-7xl gap-10 px-5 py-24 md:grid-cols-[1fr_1.2fr] md:px-10 md:py-36">
         <div>
           <p className="font-mono text-[0.66rem] uppercase tracking-[0.3em] text-champagne/65">
-            Approche
+            {settings.introEyebrow}
           </p>
           <h2 className="mt-6 max-w-xl font-serif text-5xl leading-none text-ivory md:text-7xl">
-            Un site pensé comme un beau livre.
+            {settings.introTitle}
           </h2>
         </div>
         <p className="max-w-2xl self-end text-lg leading-9 text-ivory/55">
-          Chaque série fonctionne comme un chapitre photographique. Les contenus viennent
-          d’un fichier de données central, afin d’ajouter ou modifier les séries sans toucher
-          aux composants.
+          {settings.introText}
         </p>
       </section>
 
@@ -62,14 +64,14 @@ export default function Home() {
         <div className="mb-14 flex flex-col gap-5 border-b border-ivory/10 pb-8 md:mb-20 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="font-mono text-[0.66rem] uppercase tracking-[0.3em] text-champagne/65">
-              Sommaire
+              {settings.seriesEyebrow}
             </p>
             <h2 className="mt-5 font-serif text-5xl leading-none text-ivory md:text-7xl">
-              Séries
+              {settings.seriesTitle}
             </h2>
           </div>
           <p className="max-w-md text-sm leading-7 text-ivory/42">
-            Les blocs se remplissent automatiquement dès que des photos externes sont ajoutées.
+            {settings.seriesText}
           </p>
         </div>
         <div className="grid gap-20 md:gap-28">

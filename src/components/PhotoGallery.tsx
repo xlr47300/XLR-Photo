@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { Photo } from "@/data/series";
 import { EmptyChapter } from "@/components/EmptyChapter";
+import type { Photo } from "@/types/content";
 
 type PhotoGalleryProps = {
   photos: Photo[];
@@ -49,7 +49,7 @@ export function PhotoGallery({ photos, seriesTitle }: PhotoGalleryProps) {
   }, [activeIndex, availablePhotos.length]);
 
   if (availablePhotos.length === 0) {
-    return <EmptyChapter title={seriesTitle} className="min-h-[32rem]" />;
+    return <EmptyChapter title={seriesTitle} className="min-h-[24rem] md:min-h-[30rem]" />;
   }
 
   function goToPrevious() {
@@ -83,7 +83,7 @@ export function PhotoGallery({ photos, seriesTitle }: PhotoGalleryProps) {
             <span className="absolute inset-x-5 bottom-5 translate-y-3 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
               <span className="block font-serif text-2xl text-ivory">{photo.title}</span>
               {photo.caption ? (
-                <span className="mt-1 block text-sm text-ivory/55">{photo.caption}</span>
+                <span className="mt-1 block text-[0.95rem] leading-6 text-ivory/62">{photo.caption}</span>
               ) : null}
             </span>
           </button>
@@ -122,7 +122,14 @@ export function PhotoGallery({ photos, seriesTitle }: PhotoGalleryProps) {
               <div>
                 <h2 className="font-serif text-3xl text-ivory md:text-5xl">{activePhoto.title}</h2>
                 {activePhoto.caption ? (
-                  <p className="mt-3 max-w-2xl text-ivory/55">{activePhoto.caption}</p>
+                  <p className="mt-3 max-w-2xl text-[1rem] leading-7 text-ivory/62">
+                    {activePhoto.caption}
+                  </p>
+                ) : null}
+                {activePhoto.credit ? (
+                  <p className="mt-4 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ivory/38">
+                    Crédit : {activePhoto.credit}
+                  </p>
                 ) : null}
               </div>
               {availablePhotos.length > 1 ? (
