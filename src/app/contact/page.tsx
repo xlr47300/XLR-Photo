@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default async function ContactPage() {
-  const { pages } = await getSiteContent();
+  const { pages, settings } = await getSiteContent();
   const page = pages.find((item) => item.slug === "contact");
 
   if (!page) {
@@ -21,17 +21,15 @@ export default async function ContactPage() {
           {page.label}
         </p>
         <h1 className="mt-7 max-w-4xl font-serif text-[clamp(4rem,9vw,8rem)] leading-[0.92] text-ivory">
-          Tirages, séries, commandes et échanges.
+          {settings.contactTitle}
         </h1>
         <div className="mt-16 max-w-xl border border-ivory/10 bg-slate-surface/60 p-8 md:p-12">
-          <p className="text-lg leading-8 text-ivory/55">
-            Remplacez cette adresse par les coordonnées définitives.
-          </p>
+          <p className="text-lg leading-8 text-ivory/55">{settings.contactText}</p>
           <a
             className="mt-8 block font-serif text-3xl text-ivory transition-colors hover:text-champagne md:text-5xl"
-            href="mailto:contact@example.com"
+            href={`mailto:${settings.contactEmail}`}
           >
-            contact@example.com
+            {settings.contactEmail}
           </a>
         </div>
       </section>

@@ -6,7 +6,7 @@ import { useSiteContent } from "@/components/ContentProvider";
 import { getPhotoCount } from "@/lib/contentTransform";
 
 export function HomeContent() {
-  const { content, isLive } = useSiteContent();
+  const { content } = useSiteContent();
   const { settings, series } = content;
   const totalPhotoCount = getPhotoCount(content);
 
@@ -38,7 +38,7 @@ export function HomeContent() {
             <span className="text-ivory/18">·</span>
             <span>{totalPhotoCount} photographies</span>
             <span className="text-ivory/18">·</span>
-            <span>{isLive ? "Sheet synchronisé" : "Édition évolutive"}</span>
+            <span>{settings.statsLabel}</span>
           </div>
           <Link
             className="mt-12 inline-flex border border-ivory/15 px-6 py-4 font-mono text-[0.7rem] uppercase tracking-[0.22em] text-ivory/82 transition duration-300 hover:border-champagne/50 hover:text-ivory"

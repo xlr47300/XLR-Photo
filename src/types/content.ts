@@ -42,6 +42,13 @@ export type SiteSettings = {
   seriesEyebrow: string;
   seriesTitle: string;
   seriesText: string;
+  statsLabel: string;
+  aboutTitle: string;
+  aboutTextOne: string;
+  aboutTextTwo: string;
+  contactTitle: string;
+  contactText: string;
+  contactEmail: string;
   footerText: string;
 };
 

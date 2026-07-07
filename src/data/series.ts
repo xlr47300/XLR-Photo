@@ -15,6 +15,15 @@ export const fallbackContent: SiteContent = {
     seriesEyebrow: "Sommaire",
     seriesTitle: "Séries",
     seriesText: "Les blocs se remplissent automatiquement dès que des photos externes sont ajoutées.",
+    statsLabel: "Carnet évolutif",
+    aboutTitle: "Une lecture lente de la photographie.",
+    aboutTextOne:
+      "XLR Photographie présente les images par chapitres, avec une attention portée au silence, aux matières, aux lumières basses et aux séquences.",
+    aboutTextTwo:
+      "La structure du site reste volontairement simple : les séries sont pilotées par un fichier de données central et peuvent évoluer avec le temps.",
+    contactTitle: "Tirages, séries, commandes et échanges.",
+    contactText: "Pour toute demande, écrivez à cette adresse.",
+    contactEmail: "contact@example.com",
     footerText: "Ville · lumière · matière · instants"
   },
   pages: [
