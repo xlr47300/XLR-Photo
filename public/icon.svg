@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="XLR Photographie">
+  <rect width="512" height="512" rx="96" fill="#070b11"/>
+  <circle cx="256" cy="256" r="156" fill="none" stroke="#f4eadc" stroke-opacity="0.28" stroke-width="8"/>
+  <text
+    x="256"
+    y="274"
+    fill="#f4eadc"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="86"
+    letter-spacing="14"
+    text-anchor="middle"
+    dominant-baseline="middle"
+  >XLR</text>
+  <circle cx="330" cy="337" r="10" fill="#c7a06a"/>
+</svg>

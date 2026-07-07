@@ -1,6 +1,6 @@
 import { fallbackContent } from "@/data/series";
 import type { SheetRow } from "@/lib/csv";
-import type { PageLink, Photo, PhotoSeries, SiteContent, SiteSettings } from "@/types/content";
+import type { Address, PageLink, Photo, PhotoSeries, SiteContent, SiteSettings } from "@/types/content";
 import { REQUIRED_SHEETS } from "@/lib/contentConfig";
 
 export type SheetName = (typeof REQUIRED_SHEETS)[number];
@@ -11,8 +11,9 @@ export function buildContentFromRows(rows: SheetRows): SiteContent {
   const photos = buildPhotos(rows.PHOTOS);
   const series = buildSeries(rows.SERIES, photos);
   const pages = buildPages(rows.PAGES);
+  const addresses = buildAddresses(rows.ADRESSES);
 
-  return { settings, pages, series };
+  return { settings, pages, series, addresses };
 }
 
 export function getSeriesBySlug(content: SiteContent, slug: string) {
@@ -120,7 +121,33 @@ function buildPages(rows: SheetRow[]): PageLink[] {
     .filter((page) => page.slug && page.href)
     .sort((a, b) => a.order - b.order);
 
-  return pages.length > 0 ? pages : fallbackContent.pages;
+  const sourcePages = pages.length > 0 ? pages : fallbackContent.pages;
+  return ensureDefaultPages(sourcePages);
+}
+
+function ensureDefaultPages(pages: PageLink[]): PageLink[] {
+  const defaultPages = fallbackContent.pages.filter(
+    (fallbackPage) => !pages.some((page) => page.slug === fallbackPage.slug)
+  );
+
+  return [...pages, ...defaultPages].sort((a, b) => a.order - b.order);
+}
+
+function buildAddresses(rows: SheetRow[]): Address[] {
+  return rows
+    .filter(isExplicitlyActive)
+    .map((row, index) => ({
+      id: read(row, "id") || slugify(read(row, "name")) || `adresse-${index + 1}`,
+      name: read(row, "name"),
+      category: optional(read(row, "category")),
+      location: optional(read(row, "location")),
+      description: optional(read(row, "description")),
+      websiteUrl: optional(read(row, "websiteUrl")),
+      type: optional(read(row, "type").toLowerCase()),
+      order: toOrder(read(row, "order"), index + 1)
+    }))
+    .filter((address) => address.name)
+    .sort((a, b) => a.order - b.order);
 }
 
 function normalizeImageUrl(value: string) {
@@ -146,9 +173,24 @@ function isActive(row: SheetRow) {
   return !["false", "0", "no", "non", "inactive"].includes(value);
 }
 
+function isExplicitlyActive(row: SheetRow) {
+  const value = read(row, "active").toLowerCase();
+  return ["true", "1", "yes", "oui", "x"].includes(value.toLowerCase());
+}
+
 function toOrder(value: string, fallback: number) {
   const order = Number(value);
   return Number.isFinite(order) ? order : fallback;
+}
+
+function slugify(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function hrefForPage(slug: string) {

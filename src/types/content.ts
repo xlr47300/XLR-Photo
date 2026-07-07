@@ -29,6 +29,17 @@ export type PageLink = {
   order: number;
 };
 
+export type Address = {
+  id: string;
+  name: string;
+  category?: string;
+  location?: string;
+  description?: string;
+  websiteUrl?: string;
+  type?: string;
+  order: number;
+};
+
 export type SiteSettings = {
   siteTitle: string;
   siteDescription: string;
@@ -56,4 +67,5 @@ export type SiteContent = {
   settings: SiteSettings;
   pages: PageLink[];
   series: PhotoSeries[];
+  addresses: Address[];
 };

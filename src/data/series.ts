@@ -49,6 +49,14 @@ export const fallbackContent: SiteContent = {
       href: "/contact/",
       description: "Contact XLR Photographie.",
       order: 3
+    },
+    {
+      slug: "adresses",
+      title: "Adresses",
+      label: "Adresses",
+      href: "/adresses/",
+      description: "Sélection d'adresses et de réalisations.",
+      order: 4
     }
   ],
   series: [
@@ -106,5 +114,6 @@ export const fallbackContent: SiteContent = {
       order: 6,
       photos: []
     }
-  ]
+  ],
+  addresses: []
 };
