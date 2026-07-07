@@ -16,11 +16,12 @@ export function HomeContent() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(91,112,132,0.42),transparent_52%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_34%,rgba(7,11,17,0.72)_78%,rgba(7,11,17,0.98)_100%)]" />
         <div className="relative z-10 mx-auto max-w-5xl animate-[fadeUp_1.4s_cubic-bezier(0.22,0.61,0.36,1)_both]">
-          <img
-            className="mx-auto mb-10 w-56 max-w-[72vw] invert mix-blend-screen opacity-80 md:w-72"
-            src="/images/xlr-typo-logo.png"
-            alt="XLR Photographie"
-          />
+          <div className="mx-auto mb-10 grid size-24 place-items-center rounded-full border border-ivory/20 text-center shadow-[0_0_80px_rgba(199,160,106,0.08)]">
+            <span className="relative font-serif text-3xl tracking-[0.08em] text-ivory/85">
+              XLR
+              <span className="absolute -bottom-3 right-1 size-1.5 rounded-full bg-champagne/80" />
+            </span>
+          </div>
           <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-ivory/48 before:mx-4 before:inline-block before:h-px before:w-8 before:bg-ivory/15 before:align-middle after:mx-4 after:inline-block after:h-px after:w-8 after:bg-ivory/15 after:align-middle">
             {settings.heroEyebrow}
           </p>
