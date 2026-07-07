@@ -127,7 +127,7 @@ function normalizeImageUrl(value: string) {
   const match = value.match(/drive\.google\.com\/file\/d\/([^/]+)/);
 
   if (match?.[1]) {
-    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+    return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w2400`;
   }
 
   return value;
