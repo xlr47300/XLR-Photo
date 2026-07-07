@@ -69,9 +69,13 @@ async function fetchBrowserSheetRows(sheetId: string): Promise<SheetRows> {
   const entries = await Promise.all(
     REQUIRED_SHEETS.map(async (sheetName) => {
       const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&cache=${cacheBuster}`;
-      const response = await fetch(url);
+      const response = await fetch(url, { cache: "no-store" });
 
       if (!response.ok) {
+        if (sheetName === "ADRESSES") {
+          return [sheetName, []] as [SheetName, ReturnType<typeof parseCsv>];
+        }
+
         throw new Error(`Unable to read ${sheetName}: ${response.status}`);
       }
 

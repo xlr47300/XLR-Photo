@@ -29,6 +29,10 @@ export async function fetchGoogleSheetRows(sheetId: string): Promise<SheetRows> 
       const response = await fetch(url, { cache: "force-cache" });
 
       if (!response.ok) {
+        if (sheetName === "ADRESSES") {
+          return [sheetName, []] as const;
+        }
+
         throw new Error(`Unable to read ${sheetName}: ${response.status}`);
       }
 
