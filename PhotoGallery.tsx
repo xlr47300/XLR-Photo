@@ -167,26 +167,6 @@ export function PhotoGallery({ photos, seriesTitle }: PhotoGalleryProps) {
                 alt={activePhoto.alt}
                 decoding="async"
               />
-              {availablePhotos.length > 1 ? (
-                <>
-                  <button
-                    className="absolute left-2 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-night/38 text-[2.35rem] leading-none text-ivory/88 shadow-[0_2px_18px_rgba(0,0,0,0.35)] backdrop-blur-[2px] transition active:bg-night/70 md:hidden"
-                    type="button"
-                    aria-label="Photo précédente"
-                    onClick={goToPrevious}
-                  >
-                    ‹
-                  </button>
-                  <button
-                    className="absolute right-2 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-night/38 text-[2.35rem] leading-none text-ivory/88 shadow-[0_2px_18px_rgba(0,0,0,0.35)] backdrop-blur-[2px] transition active:bg-night/70 md:hidden"
-                    type="button"
-                    aria-label="Photo suivante"
-                    onClick={goToNext}
-                  >
-                    ›
-                  </button>
-                </>
-              ) : null}
             </div>
             <div className="flex flex-col gap-5 border-t border-ivory/10 pt-5 md:flex-row md:items-start md:justify-between">
               <div>
