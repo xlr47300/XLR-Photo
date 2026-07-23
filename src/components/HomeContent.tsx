@@ -12,12 +12,12 @@ export function HomeContent() {
 
   return (
     <main>
-      <section className="relative grid min-h-svh place-items-center overflow-hidden px-5 pb-24 pt-36 text-center md:px-10">
+      <section className="relative grid min-h-svh place-items-center overflow-hidden px-5 pb-8 pt-28 text-center sm:pb-14 sm:pt-32 md:px-10 md:pb-24 md:pt-36">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(91,112,132,0.42),transparent_52%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_34%,rgba(7,11,17,0.72)_78%,rgba(7,11,17,0.98)_100%)]" />
         <div className="relative z-10 mx-auto max-w-5xl animate-[fadeUp_1.4s_cubic-bezier(0.22,0.61,0.36,1)_both]">
-          <div className="mx-auto mb-10 grid size-24 place-items-center rounded-full border border-ivory/20 text-center shadow-[0_0_80px_rgba(199,160,106,0.08)]">
-            <span className="relative font-serif text-3xl tracking-[0.08em] text-ivory/85">
+          <div className="mx-auto mb-6 grid size-20 place-items-center rounded-full border border-ivory/20 text-center shadow-[0_0_80px_rgba(199,160,106,0.08)] sm:mb-8 sm:size-24 md:mb-10">
+            <span className="relative font-serif text-2xl tracking-[0.08em] text-ivory/85 sm:text-3xl">
               XLR
               <span className="absolute -bottom-3 right-1 size-1.5 rounded-full bg-champagne/80" />
             </span>
@@ -25,15 +25,15 @@ export function HomeContent() {
           <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-ivory/48 before:mx-4 before:inline-block before:h-px before:w-8 before:bg-ivory/15 before:align-middle after:mx-4 after:inline-block after:h-px after:w-8 after:bg-ivory/15 after:align-middle">
             {settings.heroEyebrow}
           </p>
-          <h1 className="mt-9 font-serif text-[clamp(4rem,10vw,9rem)] leading-[0.9] tracking-normal text-ivory">
+          <h1 className="mt-6 font-serif text-[clamp(3.4rem,17vw,5.5rem)] leading-[0.88] tracking-normal text-ivory sm:mt-8 md:mt-9 md:text-[clamp(4rem,10vw,9rem)]">
             {settings.heroTitle}
             <br />
             <em className="font-normal italic text-champagne">{settings.heroAccent}</em>
           </h1>
-          <p className="mx-auto mt-9 max-w-2xl font-serif text-[1.35rem] italic leading-9 text-ivory/66 md:text-2xl">
+          <p className="mx-auto mt-6 max-w-2xl font-serif text-lg italic leading-7 text-ivory/66 sm:mt-8 sm:text-xl sm:leading-8 md:mt-9 md:text-2xl md:leading-9">
             {settings.heroDescription}
           </p>
-          <div className="mt-12 flex flex-wrap justify-center gap-7 font-mono text-[0.72rem] uppercase tracking-[0.2em] text-ivory/48">
+          <div className="mt-7 flex flex-wrap justify-center gap-x-4 gap-y-2 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-ivory/48 sm:mt-10 sm:gap-7 sm:text-[0.72rem] sm:tracking-[0.2em] md:mt-12">
             <span>{series.length} séries</span>
             <span className="text-ivory/18">·</span>
             <span>{totalPhotoCount} photographies</span>
@@ -41,7 +41,7 @@ export function HomeContent() {
             <span>{settings.statsLabel}</span>
           </div>
           <Link
-            className="mt-12 inline-flex border border-ivory/15 px-6 py-4 font-mono text-[0.7rem] uppercase tracking-[0.22em] text-ivory/82 transition duration-300 hover:border-champagne/50 hover:text-ivory"
+            className="mt-7 inline-flex min-h-12 items-center border border-ivory/15 px-6 py-3 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ivory/82 transition duration-300 hover:border-champagne/50 hover:text-ivory sm:mt-10 sm:py-4 md:mt-12"
             href="#series"
           >
             Entrer

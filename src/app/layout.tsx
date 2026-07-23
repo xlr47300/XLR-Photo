@@ -8,9 +8,31 @@ import { getSiteContent } from "@/lib/siteContent";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://xlr-photo.pages.dev"),
   title: fallbackContent.settings.siteTitle,
   description: fallbackContent.settings.siteDescription,
   applicationName: "XLR Photographie",
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    siteName: "XLR Photographie",
+    title: fallbackContent.settings.siteTitle,
+    description: fallbackContent.settings.siteDescription,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "XLR Photographie"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: fallbackContent.settings.siteTitle,
+    description: fallbackContent.settings.siteDescription,
+    images: ["/opengraph-image"]
+  },
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,

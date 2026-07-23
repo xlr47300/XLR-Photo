@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EmptyChapter } from "@/components/EmptyChapter";
+import { RevealImage } from "@/components/RevealImage";
 import type { PhotoSeries } from "@/types/content";
 
 type SeriesCardProps = {
@@ -18,11 +19,12 @@ export function SeriesCard({ item, index }: SeriesCardProps) {
         href={`/series/${item.slug}/`}
       >
         {firstPhoto ? (
-          <img
-            className="aspect-[16/10] h-full w-full object-cover grayscale-[18%] transition duration-700 group-hover:scale-[1.025] group-hover:brightness-75"
+          <RevealImage
+            className="aspect-[16/10] h-full w-full object-cover grayscale-[18%] group-hover:scale-[1.025] group-hover:brightness-75"
             src={firstPhoto.src}
             alt={firstPhoto.alt}
             loading={index < 2 ? "eager" : "lazy"}
+            decoding="async"
           />
         ) : (
           <EmptyChapter title={item.title} className="md:min-h-[30rem]" />

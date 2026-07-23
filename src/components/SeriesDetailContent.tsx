@@ -68,6 +68,14 @@ export function SeriesDetailContent({ slug, initialSeries }: SeriesDetailContent
 
       <section className="mx-auto max-w-7xl px-5 pb-32 md:px-10 md:pb-44">
         <PhotoGallery photos={item.photos} seriesTitle={item.title} />
+        <div className="mt-16 border-t border-ivory/10 pt-8 text-center md:mt-24">
+          <Link
+            className="inline-flex min-h-12 items-center border border-ivory/15 px-6 py-3 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-ivory/72 transition hover:border-champagne/50 hover:text-ivory"
+            href="/#series"
+          >
+            Retour aux séries
+          </Link>
+        </div>
       </section>
     </main>
   );

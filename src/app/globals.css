@@ -62,9 +62,27 @@ button {
   font: inherit;
 }
 
+:focus-visible {
+  outline: 1px solid rgba(199, 160, 106, 0.9);
+  outline-offset: 4px;
+}
+
 ::selection {
   background: rgba(199, 160, 106, 0.32);
   color: #f2eadb;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 @keyframes fadeUp {
