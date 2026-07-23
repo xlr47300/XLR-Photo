@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { EmptyChapter } from "@/components/EmptyChapter";
+import { RevealImage } from "@/components/RevealImage";
 import type { Photo } from "@/types/content";
 
 type PhotoGalleryProps = {
@@ -12,7 +13,22 @@ type PhotoGalleryProps = {
 export function PhotoGallery({ photos, seriesTitle }: PhotoGalleryProps) {
   const availablePhotos = useMemo(() => photos.filter((photo) => photo.src), [photos]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const galleryScrollPosition = useRef(0);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const activePhoto = activeIndex === null ? null : availablePhotos[activeIndex];
+
+  function openPhoto(index: number) {
+    galleryScrollPosition.current = window.scrollY;
+    setActiveIndex(index);
+  }
+
+  function returnToGallery() {
+    const scrollPosition = galleryScrollPosition.current;
+    setActiveIndex(null);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollPosition);
+    });
+  }
 
   useEffect(() => {
     if (activeIndex === null) {
@@ -21,7 +37,7 @@ export function PhotoGallery({ photos, seriesTitle }: PhotoGalleryProps) {
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        setActiveIndex(null);
+        returnToGallery();
       }
 
       if (event.key === "ArrowRight") {
@@ -64,21 +80,48 @@ export function PhotoGallery({ photos, seriesTitle }: PhotoGalleryProps) {
     );
   }
 
+  function startSwipe(event: React.TouchEvent) {
+    const touch = event.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  }
+
+  function finishSwipe(event: React.TouchEvent) {
+    if (!touchStart.current) {
+      return;
+    }
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStart.current.x;
+    const deltaY = touch.clientY - touchStart.current.y;
+    touchStart.current = null;
+
+    if (Math.abs(deltaX) < 50 || Math.abs(deltaX) <= Math.abs(deltaY)) {
+      return;
+    }
+
+    if (deltaX > 0) {
+      goToPrevious();
+    } else {
+      goToNext();
+    }
+  }
+
   return (
     <>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-7">
         {availablePhotos.map((photo, index) => (
           <button
             className="group relative min-h-[22rem] overflow-hidden bg-slate-surface text-left md:col-span-4 md:min-h-[32rem] md:[&:nth-child(5n+1)]:col-span-8 md:[&:nth-child(5n+4)]:col-span-8"
-            key={photo.id}
+            key={`${photo.id}-${index}`}
             type="button"
-            onClick={() => setActiveIndex(index)}
+            onClick={() => openPhoto(index)}
           >
-            <img
-              className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025] group-hover:brightness-75"
+            <RevealImage
+              className="h-full w-full object-cover group-hover:scale-[1.025] group-hover:brightness-75"
               src={photo.src}
               alt={photo.alt}
               loading={index < 3 ? "eager" : "lazy"}
+              decoding="async"
             />
             <span className="absolute inset-x-5 bottom-5 translate-y-3 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
               <span className="block font-serif text-2xl text-ivory">{photo.title}</span>
@@ -100,8 +143,8 @@ export function PhotoGallery({ photos, seriesTitle }: PhotoGalleryProps) {
           <button
             className="absolute inset-0 cursor-zoom-out"
             type="button"
-            aria-label="Fermer"
-            onClick={() => setActiveIndex(null)}
+            aria-label="Retour à la galerie"
+            onClick={returnToGallery}
           />
           <div className="relative z-10 grid max-h-[calc(100svh-2rem)] w-full max-w-7xl grid-rows-[auto_minmax(0,1fr)_auto] gap-4">
             <div className="flex items-center justify-between gap-4 font-mono text-[0.66rem] uppercase tracking-[0.24em] text-ivory/45">
@@ -109,15 +152,42 @@ export function PhotoGallery({ photos, seriesTitle }: PhotoGalleryProps) {
                 № {String(activeIndex! + 1).padStart(2, "0")} /{" "}
                 {String(availablePhotos.length).padStart(2, "0")}
               </p>
-              <button className="transition-colors hover:text-ivory" type="button" onClick={() => setActiveIndex(null)}>
-                Fermer
+              <button className="transition-colors hover:text-ivory" type="button" onClick={returnToGallery}>
+                Retour galerie
               </button>
             </div>
-            <img
-              className="mx-auto max-h-[72svh] w-full object-contain"
-              src={activePhoto.src}
-              alt={activePhoto.alt}
-            />
+            <div
+              className="relative flex min-h-0 touch-pan-y items-center justify-center"
+              onTouchStart={startSwipe}
+              onTouchEnd={finishSwipe}
+            >
+              <RevealImage
+                className="mx-auto max-h-[72svh] w-full object-contain"
+                src={activePhoto.src}
+                alt={activePhoto.alt}
+                decoding="async"
+              />
+              {availablePhotos.length > 1 ? (
+                <>
+                  <button
+                    className="absolute left-2 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-night/38 text-[2.35rem] leading-none text-ivory/88 shadow-[0_2px_18px_rgba(0,0,0,0.35)] backdrop-blur-[2px] transition active:bg-night/70 md:hidden"
+                    type="button"
+                    aria-label="Photo précédente"
+                    onClick={goToPrevious}
+                  >
+                    ‹
+                  </button>
+                  <button
+                    className="absolute right-2 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-night/38 text-[2.35rem] leading-none text-ivory/88 shadow-[0_2px_18px_rgba(0,0,0,0.35)] backdrop-blur-[2px] transition active:bg-night/70 md:hidden"
+                    type="button"
+                    aria-label="Photo suivante"
+                    onClick={goToNext}
+                  >
+                    ›
+                  </button>
+                </>
+              ) : null}
+            </div>
             <div className="flex flex-col gap-5 border-t border-ivory/10 pt-5 md:flex-row md:items-start md:justify-between">
               <div>
                 <h2 className="font-serif text-3xl text-ivory md:text-5xl">{activePhoto.title}</h2>
